@@ -14,7 +14,7 @@ def main():
     cursor.execute("SELECT * FROM user")
     res = cursor.fetchall()
     #return "welcome to pinche! 4, len: %d, %s"%(len(res), my_app.config['EXPLAIN_TEMPLATE_LOADING'])
-    return render_template('pat/list.pat', test_name="hello this is cy 3")
+    return render_template('pat/list.pat', test_name="hello this is cy 4")
 
 if __name__ == "__main__":
     my_app.run()
