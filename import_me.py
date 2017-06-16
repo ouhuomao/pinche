@@ -1,2 +1,5 @@
 import sys
-sys.path.append("/home/chenyu/project/pinche/")
+
+PROJECT_PATH = "/home/chenyu/project/pinche/"
+
+sys.path.append(PROJECT_PATH)
