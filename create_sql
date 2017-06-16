@@ -1,0 +1,59 @@
+use pinche;
+
+create table if not exists user(
+id int(11) unsigned not null auto_increment,
+appid varchar(32) not null,
+name varchar(64) not null, 
+phone varchar(16) not null,
+user_type tinyint(4) not null, 
+status tinyint(4) not null,
+msg varchar(64) not null,
+primary key (id),
+unique key (phone)
+) engine=innodb character set=utf8 collate=utf8_bin;
+
+create table if not exists distination(
+id int(11) unsigned not null auto_increment,
+name varchar(64) not null,
+primary key (id),
+unique key (name)
+) engine=innodb character set=utf8 collate=utf8_bin;
+
+create table if not exists user_distination (
+user_id int(11) unsigned not null,
+distination_id int(11) unsigned not null,
+primary key(user_id, distination_id),
+foreign key (user_id) references user(id),
+foreign key (distination_id) references distination(id)
+) engine=innodb character set=utf8 collate=utf8_bin;
+
+create table if not exists journey(
+id int(11) unsigned not null auto_increment,
+user_id int(11) unsigned not null,
+user_type tinyint(4) unsigned not null comment 'redundant user type for query',
+distination_id int(11) unsigned not null,
+order_type tinyint(4) unsigned not null comment 'go out or return home',
+begin_time datetime not null,
+end_time datetime not null,
+person_cnt tinyint(4) unsigned not null,
+status tinyint(4) not null,
+create_time datetime not null,
+primary key (id),
+foreign key (user_id) references user(id),
+foreign key (distination_id) references distination(id)
+) engine=innodb character set=utf8 collate=utf8_bin;
+
+
+create table if not exists journey_order(
+id int(11) unsigned not null auto_increment,
+driver_journey_id int(11) unsigned not null,
+passenger_journey_id int(11) unsigned not null,
+status tinyint(4) not null,
+create_time datetime not null,
+create_user_id int(11) unsigned not null,
+primary key (id),
+foreign key (driver_journey_id) references journey(id),
+foreign key (passenger_journey_id) references journey(id),
+foreign key (create_user_id) references user(id)
+) engine=innodb character set=utf8 collate=utf8_bin;
+
