@@ -5,7 +5,7 @@ id int(11) unsigned not null auto_increment,
 appid varchar(32) not null,
 name varchar(64) not null, 
 phone varchar(16) not null,
-user_type tinyint(4) not null, 
+user_types tinyint(4) not null, 
 status tinyint(4) not null,
 msg varchar(64) not null,
 primary key (id),
@@ -30,9 +30,9 @@ foreign key (distination_id) references distination(id)
 create table if not exists journey(
 id int(11) unsigned not null auto_increment,
 user_id int(11) unsigned not null,
-user_type tinyint(4) unsigned not null comment 'redundant user type for query',
 distination_id int(11) unsigned not null,
-order_type tinyint(4) unsigned not null comment 'go out or return home',
+order_type tinyint(4) unsigned not null comment 'have seat or have person',
+direction tinyint(4) unsigned not null comment 'out home or go home',
 begin_time datetime not null,
 end_time datetime not null,
 person_cnt tinyint(4) unsigned not null,
@@ -57,3 +57,11 @@ foreign key (passenger_journey_id) references journey(id),
 foreign key (create_user_id) references user(id)
 ) engine=innodb character set=utf8 collate=utf8_bin;
 
+create table if not exists journey_order_change(
+journey_order_id int(11) unsigned not null auto_increment,
+from_status tinyint(4) not null,
+to_status tinyint(4) not null,
+register_time datetime not null,
+user_id int(11) unsigned not null,
+foreign key (journey_order_id) references journey_order(id)
+) engine=innodb character set=utf8 collate=utf8_bin;
