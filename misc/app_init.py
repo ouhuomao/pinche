@@ -15,3 +15,4 @@ def get_app(module_name):
     app = Flask(__name__)
     app.jinja_loader = my_loader
     return app
+
